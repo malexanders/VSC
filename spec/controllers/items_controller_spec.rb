@@ -2,6 +2,7 @@ require 'rails_helper'
 require 'spec_helper'
 
 RSpec.describe ItemsController, type: [:controller] do
+	let!(:item) { FactoryGirl.create(:item) }
 
 	describe "GET #index" do
 		before { get :index }
@@ -16,12 +17,12 @@ RSpec.describe ItemsController, type: [:controller] do
 	end
 
 	describe "GET #show" do
+		before {get :show, id: item.id}
+
 		it "returns http success" do
-			item = FactoryGirl.create(:item)
-			# get '/items/:id', id: item.id
-			get :show, id: item.id
 			expect(response).to have_http_status(:success)
 		end
+		
 	end
 
 end
