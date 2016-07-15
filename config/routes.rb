@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
 	resources :users
 	resources :items
-	get "users/:id/items" => "users#seller_items"
+	get "users/:id/sold_items" => "users#sold_items"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
