@@ -17,7 +17,6 @@ let!(:category) { FactoryGirl.create(:category_with_item) }
 		it "returns a list of available items for a particular category" do
 			parsed_body = JSON.parse(response.body)
 			parsed_items = JSON.parse(Category.find(category.id).items.available.to_json)
-			byebug
 			expect(parsed_items).to eq(parsed_body)
 		end
   end
