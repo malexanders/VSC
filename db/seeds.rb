@@ -69,6 +69,6 @@ items = Item.all
 
 items.each do |item|
 	item.categorizations.create(
-		category_id: rand(3)
+		category_id: rand(1..3)
 	)
 end

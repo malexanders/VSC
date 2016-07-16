@@ -3,7 +3,7 @@ class ItemsController < ApplicationController
 	# Returns full list of items
 	def index
 		@items = Item.all
-		render json: @items
+		# render json: @items
 	end
 
 	# Returns details for a single item
