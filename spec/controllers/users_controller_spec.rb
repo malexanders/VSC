@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'spec_helper'
 
 RSpec.describe UsersController, type: [:controller] do
-	let!(:user) { FactoryGirl.create(:user) }
+	let!(:user) { FactoryGirl.create(:user_with_item) }
 
   describe "GET #sold_items" do
 		before { get :sold_items, id: user.id }
@@ -12,6 +12,7 @@ RSpec.describe UsersController, type: [:controller] do
     end
 
 		it "responds with json" do
+			byebug
 			expect(response.content_type).to eq("application/json")
 		end
   end
