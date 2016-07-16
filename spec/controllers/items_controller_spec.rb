@@ -13,7 +13,6 @@ RSpec.describe ItemsController, type: [:controller] do
 		it "responds with json" do
 			expect(response.content_type).to eq("application/json")
 		end
-
 	end
 
 	describe "GET #show" do
@@ -22,7 +21,10 @@ RSpec.describe ItemsController, type: [:controller] do
 		it "returns http success" do
 			expect(response).to have_http_status(:success)
 		end
-		
+
+		it "responds with json" do
+			expect(response.content_type).to eq("application/json")
+		end
 	end
 
 end
