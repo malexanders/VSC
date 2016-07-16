@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  get 'category/available_items'
+
 	resources :users
 	resources :items
 	get "users/:id/sold_items" => "users#sold_items"
