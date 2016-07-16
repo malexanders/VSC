@@ -1,8 +1,7 @@
 json.array! @items do |item|
-	json.id 								item.id
 	json.title 							item.title
 	json.description 				item.description
-	json.category						item.categories.length > 0 ? item.categories.first.title : "none"
+	json.category						item.categories.first.title
 	json.price							item.price / 100.0
 	json.status							item.status
 

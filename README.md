@@ -4,6 +4,13 @@ rails 4.2.6
 
 # Design Rationale
 
+many-to-many relationship for items and categories association:
+* has_many through
+	* more flexible than has_and_belongs_to_many
+	* can add more data than just the foreign_keys in the join table
+		* created 'categorizations' model to join items and categories
+* allows for multiple categories to be added to an item in the future.
+	* I noticed on the varage sale website their are categories and sub-categories for items. This could be implemented using a has_many through association.
 
 
 ## Data Types
