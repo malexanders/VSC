@@ -8,7 +8,6 @@ class ItemsController < ApplicationController
 	# Returns details for a single item
 	def show
 		@item = Item.find(params[:id])
-		render json: @item
 	end
 
 end

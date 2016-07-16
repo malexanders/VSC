@@ -24,6 +24,7 @@ RSpec.describe ItemsController, type: [:controller] do
 			expect(response.content_type).to eq("application/json")
 		end
 
+		# Could make some improvements to this test
 		it "returns a list of all items" do
 			parsed_body = JSON.parse(response.body)
 			all_items = JSON.parse(Item.all.to_json)
