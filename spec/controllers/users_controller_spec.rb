@@ -15,7 +15,7 @@ RSpec.describe UsersController, type: [:controller] do
 			expect(response.content_type).to eq("application/json")
 		end
 
-		it "shows only items sold" do
+		it "returns a list of all sold items for a particular seller" do
 			parsed_body = JSON.parse(response.body)
 			items_sold = Item.where(seller: user).sold
 
