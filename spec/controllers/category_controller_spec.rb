@@ -6,7 +6,7 @@ let!(:category) { FactoryGirl.create(:category_with_item) }
 
   describe "GET #available_items" do
     it "returns http success" do
-      get :available_items
+      get :available_items, id: category.id
       expect(response).to have_http_status(:success)
     end
   end
