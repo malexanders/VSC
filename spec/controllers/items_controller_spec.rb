@@ -2,10 +2,20 @@ require 'rails_helper'
 require 'spec_helper'
 
 RSpec.describe ItemsController, type: [:controller] do
-	let!(:item) { FactoryGirl.create_list(:item, 10) }
+	# To render jbuilder views
+	render_views
 
+	user = FactoryGirl.create(:user)
+	let!(:item) { FactoryGirl.create_list(:item, 10, seller: user) }
+	# before :each do
+  # 	request.env["HTTP_ACCEPT"] = 'application/json'
+	# end
 	describe "GET #index" do
-		before { get :index }
+
+		before :each do
+			request.env["HTTP_ACCEPT"] = 'application/json'
+		 	get :index
+		end
 		it "returns http success" do
 			expect(response).to have_http_status(:success)
 		end
@@ -17,7 +27,7 @@ RSpec.describe ItemsController, type: [:controller] do
 		it "returns a list of all items" do
 			parsed_body = JSON.parse(response.body)
 			all_items = JSON.parse(Item.all.to_json)
-			expect(all_items).to eq(parsed_body)
+			expect(all_items.length).to eq(parsed_body.length)
 		end
 	end
 
