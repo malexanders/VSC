@@ -11,7 +11,6 @@ RSpec.describe CategoriesController, type: :controller do
   describe 'GET #available_items' do
     before { get :available_items, id: category.id }
     it 'returns http success' do
-			byebug
       expect(response).to have_http_status(:success)
     end
 
