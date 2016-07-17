@@ -24,7 +24,8 @@ RSpec.describe UsersController, type: [:controller] do
 		end
 
 		it 'returns only items where seller_id equals seller.id' do
-			answer = json.all?{|item| item["seller_id"] == seller.id}
+			response_items_ids = json.map { |item| item['id'] }
+			answer = response_items_ids.all?{|id| Item.find(id).seller_id == seller.id}
 			expect(answer).to eq(true)
 		end
 
@@ -37,7 +38,7 @@ RSpec.describe UsersController, type: [:controller] do
 		it 'returns all required fields' do
 			response_item = json[0]
 			db_item = Item.find(json[0]["id"].to_i)
-			byebug
+
 			expect(response_item['id']).to eq db_item.id
 			expect(response_item['title']).to eq db_item.title
 			expect(response_item['description']).to eq db_item.description
