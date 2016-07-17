@@ -43,7 +43,7 @@ one-to-many relationship for items to user(as seller) relationship
 | price | bigint | Save price in cents; Integers perform faster than numeric or float in math operations|
 | status | integer | Allows me to apply ActiveRecord Enum to this column. Status options are a static list and are unlikely to change much in the future, therefore, ActiveRecord Enum is an elegant solution for getting and setting values. |
 | published_date | datetime | standard type for date columns |
-| seller_id | integer | foreign_key referencing the primary key of the user table. An item will only one seller (belongs_to :seller), therefore, the seller_id should exist in the item table |
+| seller_id | integer | standard type for foreign_keys; seller_id is a foreign_key that references the primary key in the user table. An item will only have one seller (belongs_to :seller), therefore, the seller_id should exist in the item table |
 
 ### Category Model
 | column | type | reason |
