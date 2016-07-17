@@ -64,7 +64,7 @@ RSpec.describe ItemsController, type: [:controller] do
     # Had to manipulate the db_item attributes
     # Because I manipulated some data in the jbuilder template
 		# satisfies 'a list of all items' requirement
-    it 'returns all required fields for a non-banned item' do
+    it 'returns all required fields' do
       response_item = json
       db_item = items[0]
       expect(response_item['id']).to eq db_item.id

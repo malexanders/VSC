@@ -49,7 +49,7 @@ RSpec.describe CategoriesController, type: :controller do
       expect(response_items_ids).to eq(db_items_ids)
     end
 
-		it 'returns all required fields for a non-banned item' do
+		it 'returns all required fields' do
 			response_item = json[0]
 			db_item = Item.find(json[0]["id"].to_i)
 
