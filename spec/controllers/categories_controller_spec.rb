@@ -33,5 +33,11 @@ RSpec.describe CategoriesController, type: :controller do
 			expect(response_items_ids.length > 0 && db_items_ids.length > 0).to eq(true)
       expect(response_items_ids).to eq(db_items_ids)
     end
+
+		it 'returns only items with status available' do
+			answer = json.all?{|item| item["status"] == "available"}
+			expect(answer).to eq(true)
+		end
+
   end
 end
