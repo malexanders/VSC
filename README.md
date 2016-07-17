@@ -4,13 +4,26 @@ rails 4.2.6
 
 # Design Rationale
 
+## Associations
 many-to-many relationship for items and categories association:
 * has_many through
 	* more flexible than has_and_belongs_to_many
 	* can add more data than just the foreign_keys in the join table
 		* created 'categorizations' model to join items and categories
+			* belongs_to items
+			* belongs_to categories
+			* contains both foreign keys
 * allows for multiple categories to be added to an item in the future.
-	* I noticed on the varage sale website their are categories and sub-categories for items. This could be implemented using a has_many through association.
+	* I noticed on the varage sale website there are categories and sub-categories for items. This could be implemented using a has_many through association.
+
+one-to-many relationship for items to user(as seller) relationship
+* seller has_many items
+	* seller can sell many items
+* item belongs_to seller
+	* typically an item can only be sold by one person or entity
+* I chose to alias the foreign key as seller_id because:
+	* highly likely to add other personas to the user model, like buyer for example.
+
 
 
 ## Data Types
@@ -32,7 +45,7 @@ many-to-many relationship for items and categories association:
 | published_date | datetime | standard type for date columns |
 | seller_id | integer | foreign_key referencing the primary key of the user table. An item will only one seller (belongs_to :seller), therefore, the seller_id should exist in the item table |
 
-### Category
+### Category Model
 | column | type | reason |
 | ------ | ---- |------- |
 | name | string | standard type for title column |
