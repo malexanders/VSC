@@ -26,15 +26,11 @@ RSpec.describe CategoriesController, type: :controller do
 
 		# Questioning this one.
 		# Refactor to make more readable and efficient
-		it 'returns only items that are categorized under category' do
-			item_ids_by_json = json.map{|item| item["id"]}
-			answer = item_ids_by_json.all?{|id| Item.find(id).categories.any?{|cat| cat.id == category.id } }
-			expect(answer).to eq(true)
-		end
-
-		it 'returns only items where status equals available' do
-			answer = json.all?{|item| item["status"] == "available"}
-			expect(answer).to eq(true)
+		it 'returns only available items that are categorized under category' do
+			db_items = Item.joins(:categories).where(categories: {id: category.id}, status: 0)
+			db_items_ids = db_items.map(&:id)
+			response_items_ids = json.map{|item| item["id"]}
+			expect(response_items_ids).to eq(db_items_ids)
 		end
 
 		# Parses response.body
@@ -53,7 +49,20 @@ RSpec.describe CategoriesController, type: :controller do
       expect(response_items_ids).to eq(db_items_ids)
     end
 
+		it 'returns all required fields for a non-banned item' do
+			response_item = json[0]
+			db_item = Item.find(json[0]["id"].to_i)
 
-
+			expect(response_item['id']).to eq db_item.id
+			expect(response_item['title']).to eq db_item.title
+			expect(response_item['description']).to eq db_item.description
+			expect(response_item['category']).to eq db_item.categories.length > 0 ? db_item.categories.first.title : 'none'
+			expect(response_item['price']).to eq db_item.price / 100.0
+			expect(response_item['status']).to eq db_item.status
+			expect(response_item['published_date']).to eq db_item.published_date.utc.to_s
+			expect(response_item['seller_name']).to eq db_item.seller.name
+			expect(response_item['seller_latitude']).to eq db_item.seller.latitude.to_f
+			expect(response_item['seller_longtitude']).to eq db_item.seller.longtitude.to_f
+		end
   end
 end
