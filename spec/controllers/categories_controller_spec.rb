@@ -5,7 +5,8 @@ RSpec.describe CategoriesController, type: :controller do
 	# To render jbuilder views
   render_views
 
-	let!(:category) { FactoryGirl.create(:category_with_item) }
+	let!(:category) { FactoryGirl.create(:category_with_available_items) }
+	let!(:category2) { FactoryGirl.create(:category_with_available_items) }
 	let(:json) { JSON.parse(response.body) }
 
   describe 'GET #available_items' do
@@ -17,6 +18,24 @@ RSpec.describe CategoriesController, type: :controller do
     it 'responds with json' do
       expect(response.content_type).to eq('application/json')
     end
+
+		it 'returns only items where status equals available' do
+			answer = json.all?{|item| item["status"] == "available"}
+			expect(answer).to eq(true)
+		end
+
+		# Questioning this one.
+		# Refactor to make more readable and efficient
+		it 'returns only items that are categorized under category' do
+			item_ids_by_json = json.map{|item| item["id"]}
+			answer = item_ids_by_json.all?{|id| Item.find(id).categories.any?{|cat| cat.id == category.id } }
+			expect(answer).to eq(true)
+		end
+
+		it 'returns only items where status equals available' do
+			answer = json.all?{|item| item["status"] == "available"}
+			expect(answer).to eq(true)
+		end
 
 		# Parses response.body
 		# Pulls all available items from test db
@@ -34,10 +53,7 @@ RSpec.describe CategoriesController, type: :controller do
       expect(response_items_ids).to eq(db_items_ids)
     end
 
-		it 'returns only items with status available' do
-			answer = json.all?{|item| item["status"] == "available"}
-			expect(answer).to eq(true)
-		end
+
 
   end
 end
