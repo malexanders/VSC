@@ -56,6 +56,28 @@ a list of available items for a particular category
 http://localhost:3000/categories/1/available_items.json
 
 
+# Production Server API Requests
+
+I deployed the application to Heroku. You can view all the required data by making requests directly to the rails api, running on a heroku production server. I have seeded the production db with all the same sample data you have access to locally.
+
+To make API requests to the production server please use the following urls:
+
+a list of all items
+
+https://aqueous-lowlands-69853.herokuapp.com/items.json
+
+details of one item
+
+http://localhost:3000/items/1.json
+
+a list of all sold items for a particular seller
+
+http://localhost:3000/users/1/sold_items.json
+
+a list of available items for a particular category
+
+http://localhost:3000/categories/1/available_items.json
+
 # Design Rationale
 
 ## Associations
