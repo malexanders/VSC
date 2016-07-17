@@ -50,7 +50,11 @@ one-to-many relationship for items to user(as seller) relationship
 | ------ | ---- |------- |
 | name | string | standard type for title column |
 
-
+### Categorizations Model
+| column | type | reason |
+| ------ | ---- |------- |
+| item_id | integer | standard type for foreign_keys |
+| category_id | integer | standard type for foreign_key |
 
 
 
