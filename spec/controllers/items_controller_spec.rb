@@ -40,7 +40,7 @@ RSpec.describe ItemsController, type: [:controller] do
 		it 'does not return fields seller_name and published_date for banned items' do
 			banned_item = json.select{|item| item["status"] == "banned"}
 
-			expect(banned_item[0]["seller_name"]).to eq(nil)
+			expect(banned_item[0]["seller_name"]).to eq(nil)			
 			expect(banned_item[0]["published_date"]).to eq(nil)
 		end
 
