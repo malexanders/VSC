@@ -40,15 +40,19 @@ You can view all the required data in your browser by making the following get r
 _TIP: JSONview is a great chrome extension that pretty prints the json to the browser window. Much nicer than a json blob._
 
 a list of all items
+
 http://localhost:3000/items.json
 
 details of one item
+
 http://localhost:3000/items/1.json
 
 a list of all sold items for a particular seller
+
 http://localhost:3000/users/1/sold_items.json
 
 a list of available items for a particular category
+
 http://localhost:3000/categories/1/available_items.json
 
 
