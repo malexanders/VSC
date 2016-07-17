@@ -23,6 +23,7 @@ RSpec.describe ItemsController, type: [:controller] do
     # Pulls all items from test db
     # Iterates through response_items and db_items
     # Extractes ids of all objects in each collection and passes them into separate arrays
+		# Makes sure neither array is empty
     # Expects the two arrays of ids to be equal
     it 'returns a list of all items' do
       response_items = JSON.parse(response.body)
@@ -31,7 +32,8 @@ RSpec.describe ItemsController, type: [:controller] do
       response_items_ids = response_items.map { |item| item['id'] }
       db_items_ids = db_items.map { |item| item['id'] }
 
-      expect(parsed_body_ids).to eq(all_item_ids)
+			expect(response_items_ids.length > 0 && db_items_ids.length > 0).to eq(true)
+      expect(response_items_ids).to eq(db_items_ids)
     end
   end
 
