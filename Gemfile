@@ -34,6 +34,14 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'faker'
 gem 'rubocop'
 
+# Initialize redis
+# Allows me to connect to redis instance easily
+gem 'redis'
+gem 'redis-namespace'
+gem 'redis-rails'
+gem 'redis-rack-cache'
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
