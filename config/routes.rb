@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   resources :users
   resources :items
-  get 'users/:id/sold_items' => 'users#sold_items', defaults: { format: :json }
-  get 'categories/:id/available_items' => 'categories#available_items', defaults: { format: :json }
+  get 'users/:id/sold_items' => 'users#sold_items'
+  get 'categories/:id/available_items' => 'categories#available_items'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

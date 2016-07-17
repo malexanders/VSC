@@ -26,7 +26,7 @@ users = User.create([{
     description: Faker::Lorem.paragraph,
     price: Faker::Number.number(5),
     status: 'available',
-    published_date: Faker::Date.backward(14),
+    published_date: Faker::Time.backward(14),
     seller_id: users[0].id
   )
 end

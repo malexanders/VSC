@@ -1,4 +1,4 @@
-json.array! @items do |item|
+json.array! @available_items do |item|
   json.id	item.id
   json.title	item.title
   json.description	item.description
