@@ -1,6 +1,56 @@
-* Ruby/Rails versions
+# Ruby version
 ruby 2.3.0p0 (2015-12-25 revision 53290) [x86_64-darwin13]
+
+# Rails version
 rails 4.2.6
+
+# Running the Code Locally
+
+## Install postgresql
+If you do not already have postgresql installed and configured, follow this link:
+
+For Mac
+http://www.postgresql.org/download/macosx/
+
+For Linux
+https://wiki.postgresql.org/wiki/Detailed_installation_guides
+
+## Clone the repo from github
+
+From console:
+`git clone https://github.com/malexanders/VSC.git`
+
+then cd into VSC directory.
+
+## Install gems and set up database
+### Run these commands in the terminal, inside the app directory
+1. `bundle install`
+2. `rake db:create`
+3. `rake db:migrate`
+4. `rake db:seed`
+
+Now all the sample data should exist locally inside a postgresql db.
+
+## Running Test Suite
+Run `rspec --format documentation` in terminal from inside the app directory.
+
+## Local API Requests
+You can view all the required data in your browser by making the following get requests to the rails API.
+
+_TIP: JSONview is a great chrome extension that pretty prints the json to the browser window. Much nicer than a json blob._
+
+a list of all items
+http://localhost:3000/items.json
+
+details of one item
+http://localhost:3000/items/1.json
+
+a list of all sold items for a particular seller
+http://localhost:3000/users/1/sold_items.json
+
+a list of available items for a particular category
+http://localhost:3000/categories/1/available_items.json
+
 
 # Design Rationale
 
@@ -23,8 +73,6 @@ one-to-many relationship for items to user(as seller) relationship
 	* typically an item can only be sold by one person or entity
 * I chose to alias the foreign key as seller_id because:
 	* highly likely to add other personas to the user model, like buyer for example.
-
-
 
 ## Data Types
 ### User Model
