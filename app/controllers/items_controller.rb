@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
+	include ItemsHelper
   # Returns full list of items
   def index
-    @items = Item.all
+    @items = fetch_items
   end
 
   # Returns details for a single item
