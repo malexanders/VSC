@@ -33,5 +33,21 @@ RSpec.describe UsersController, type: [:controller] do
       items_sold = Item.where(seller: seller).sold
       expect(parsed_body.length).to eq(items_sold.length)
     end
+
+		it 'returns all required fields' do
+			response_item = json[0]
+			db_item = Item.find(json[0]["id"].to_i)
+			byebug
+			expect(response_item['id']).to eq db_item.id
+			expect(response_item['title']).to eq db_item.title
+			expect(response_item['description']).to eq db_item.description
+			expect(response_item['category']).to eq db_item.categories.length > 0 ? db_item.categories.first.title : 'none'
+			expect(response_item['price']).to eq db_item.price / 100.0
+			expect(response_item['status']).to eq db_item.status
+			expect(response_item['published_date']).to eq db_item.published_date.utc.to_s
+			expect(response_item['seller_name']).to eq db_item.seller.name
+			expect(response_item['seller_latitude']).to eq db_item.seller.latitude.to_f
+			expect(response_item['seller_longtitude']).to eq db_item.seller.longtitude.to_f
+		end
   end
 end

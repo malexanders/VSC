@@ -3,6 +3,5 @@ class UsersController < ApplicationController
   # and the item has been sold.
   def sold_items
     @sold_items = User.find(params[:id]).seller_items.sold
-    render json: @sold_items
   end
 end
