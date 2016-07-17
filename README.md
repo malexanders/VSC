@@ -39,19 +39,19 @@ You can view all the required data in your browser by making the following get r
 
 _TIP: JSONview is a great chrome extension that pretty prints the json to the browser window. Much nicer than a json blob._
 
-a list of all items
+__a list of all items__
 
 http://localhost:3000/items.json
 
-details of one item
+__details of one item__
 
 http://localhost:3000/items/1.json
 
-a list of all sold items for a particular seller
+__a list of all sold items for a particular seller__
 
 http://localhost:3000/users/1/sold_items.json
 
-a list of available items for a particular category
+__a list of available items for a particular category__
 
 http://localhost:3000/categories/1/available_items.json
 
@@ -62,21 +62,21 @@ I deployed the application to Heroku. You can view all the required data by maki
 
 To make API requests to the production server please use the following urls:
 
-a list of all items
+__a list of all items__
 
 https://aqueous-lowlands-69853.herokuapp.com/items.json
 
-details of one item
+__details of one item__
 
-http://localhost:3000/items/1.json
+https://aqueous-lowlands-69853.herokuapp.com/items/1.json
 
-a list of all sold items for a particular seller
+__a list of all sold items for a particular seller__
 
-http://localhost:3000/users/1/sold_items.json
+https://aqueous-lowlands-69853.herokuapp.com/users/1/sold_items.json
 
-a list of available items for a particular category
+__a list of available items for a particular category__
 
-http://localhost:3000/categories/1/available_items.json
+https://aqueous-lowlands-69853.herokuapp.com/categories/1/available_items.json
 
 # Design Rationale
 
