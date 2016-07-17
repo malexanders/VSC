@@ -7,6 +7,8 @@ RSpec.describe ItemsController, type: [:controller] do
 
   user = FactoryGirl.create(:user)
   let!(:items) { FactoryGirl.create_list(:item, 10, seller: user) }
+	let!(:item_banned) {FactoryGirl.create(:item, status: "banned")}
+	let(:json) { JSON.parse(response.body) }
 
   describe 'GET #index' do
     before { get :index }
@@ -26,15 +28,23 @@ RSpec.describe ItemsController, type: [:controller] do
 		# Makes sure neither array is empty
     # Expects the two arrays of ids to be equal
     it 'returns a list of all items' do
-      response_items = JSON.parse(response.body)
       db_items = JSON.parse(Item.all.to_json)
 
-      response_items_ids = response_items.map { |item| item['id'] }
+      response_items_ids = json.map { |item| item['id'] }
       db_items_ids = db_items.map { |item| item['id'] }
 
 			expect(response_items_ids.length > 0 && db_items_ids.length > 0).to eq(true)
       expect(response_items_ids).to eq(db_items_ids)
     end
+
+		it 'does not return fields seller_name and published_date for banned items' do
+			banned_item = json.select{|item| item["status"] == "banned"}
+
+			expect(banned_item[0]["seller_name"]).to eq(nil)
+			expect(banned_item[0]["published_date"]).to eq(nil)
+		end
+
+
   end
 
   describe 'GET #show' do
@@ -54,7 +64,7 @@ RSpec.describe ItemsController, type: [:controller] do
     # Had to manipulate the db_item attributes
     # Because I manipulated some data in the jbuilder template
     it 'returns details for a specific item' do
-      response_item = JSON.parse(response.body)
+      response_item = json
       db_item = items[0]
       expect(response_item['id']).to eq db_item.id
       expect(response_item['title']).to eq db_item.title
