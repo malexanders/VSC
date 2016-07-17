@@ -37,17 +37,17 @@ RSpec.describe ItemsController, type: [:controller] do
       expect(response_items_ids).to eq(db_items_ids)
     end
 
-		it 'does not return fields seller_name and published_date for banned items' do
+		it 'omits fields seller_name and published_date for banned items' do
 			banned_item = json.select{|item| item["status"] == "banned"}
 
-			expect(banned_item[0]["seller_name"]).to eq(nil)			
+			expect(banned_item[0]["seller_name"]).to eq(nil)
 			expect(banned_item[0]["published_date"]).to eq(nil)
 		end
 
 
   end
 
-  describe 'GET #show' do
+  describe 'GET #show non-banned item' do
     before { get :show, id: items[0].id }
 
     it 'returns http success' do
@@ -63,7 +63,8 @@ RSpec.describe ItemsController, type: [:controller] do
     # Verifies that response_item and db_item attributes match
     # Had to manipulate the db_item attributes
     # Because I manipulated some data in the jbuilder template
-    it 'returns details for a specific item' do
+		# satisfies 'a list of all items' requirement
+    it 'returns all required fields for a non-banned item' do
       response_item = json
       db_item = items[0]
       expect(response_item['id']).to eq db_item.id
@@ -78,4 +79,21 @@ RSpec.describe ItemsController, type: [:controller] do
       expect(response_item['seller_longtitude']).to eq db_item.seller.longtitude.to_f
     end
   end
+
+	describe 'GET #show banned item' do
+		before { get :show, id: item_banned.id }
+		it 'returns http success' do
+			expect(response).to have_http_status(:success)
+		end
+
+		it 'responds with json' do
+			expect(response.content_type).to eq('application/json')
+		end
+
+		it 'omits fields seller_name and published_date for banned item' do
+			expect(json["seller_name"]).to eq(nil)
+			expect(json["published_date"]).to eq(nil)
+		end
+	end
+
 end
