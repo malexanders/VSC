@@ -41,6 +41,8 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+	# Must set HTTP_ACCEPT to application/json
+	# To render jbuilder views.
 	config.before(:each) do
   	request.env["HTTP_ACCEPT"] = 'application/json' if defined? request
 	end
