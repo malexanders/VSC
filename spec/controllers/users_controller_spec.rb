@@ -26,7 +26,6 @@ RSpec.describe UsersController, type: [:controller] do
 			expect(answer).to eq(true)
 		end
 
-
     it 'returns a list of all sold items for a particular seller' do
       parsed_body = JSON.parse(response.body)
       items_sold = Item.where(seller: seller).sold
