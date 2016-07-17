@@ -5,7 +5,7 @@ FactoryGirl.define do
     factory :category_with_item do
       after(:create) do |category|
         category.items << FactoryGirl.create_list(:item, 10, status: 0)
-        category.items << FactoryGirl.create_list(:item, 3, status: 2)
+        category.items << FactoryGirl.create_list(:item, 1, status: 4)
       end
     end
   end
