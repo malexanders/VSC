@@ -4,8 +4,9 @@ require 'spec_helper'
 RSpec.describe CategoriesController, type: :controller do
 	# To render jbuilder views
   render_views
-	
+
 	let!(:category) { FactoryGirl.create(:category_with_item) }
+	let(:json) { JSON.parse(response.body) }
 
   describe 'GET #available_items' do
     before { get :available_items, id: category.id }
@@ -24,10 +25,9 @@ RSpec.describe CategoriesController, type: :controller do
 		# Makes sure neither array is empty
 		# Expects the two arrays of ids to be equal
     it 'returns a list of available items for a particular category' do
-			response_items = JSON.parse(response.body)
       db_items = JSON.parse(Category.find(category.id).items.available.to_json)
 
-      response_items_ids = response_items.map { |item| item['id'] }
+      response_items_ids = json.map { |item| item['id'] }
       db_items_ids = db_items.map { |item| item['id'] }
 
 			expect(response_items_ids.length > 0 && db_items_ids.length > 0).to eq(true)
