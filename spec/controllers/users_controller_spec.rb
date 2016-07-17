@@ -2,6 +2,8 @@ require 'rails_helper'
 require 'spec_helper'
 
 RSpec.describe UsersController, type: [:controller] do
+	render_views
+
   let!(:seller) { FactoryGirl.create(:seller_with_items) }
 	let(:json) { JSON.parse(response.body) }
 
