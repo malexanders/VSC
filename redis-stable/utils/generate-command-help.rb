@@ -1,58 +1,53 @@
 #!/usr/bin/env ruby
 
-GROUPS = [
-  "generic",
-  "string",
-  "list",
-  "set",
-  "sorted_set",
-  "hash",
-  "pubsub",
-  "transactions",
-  "connection",
-  "server",
-  "scripting",
-  "hyperloglog",
-  "cluster",
-  "geo"
-].freeze
+GROUPS = %w(
+  generic
+  string
+  list
+  set
+  sorted_set
+  hash
+  pubsub
+  transactions
+  connection
+  server
+  scripting
+  hyperloglog
+  cluster
+  geo).freeze
 
 GROUPS_BY_NAME = Hash[*
-  GROUPS.each_with_index.map do |n,i|
-    [n,i]
+  GROUPS.each_with_index.map do |n, i|
+    [n, i]
   end.flatten
 ].freeze
 
-def argument arg
-  name = arg["name"].is_a?(Array) ? arg["name"].join(" ") : arg["name"]
-  name = arg["enum"].join "|" if "enum" == arg["type"]
-  name = arg["command"] + " " + name if arg["command"]
-  if arg["multiple"]
-    name = "#{name} [#{name} ...]"
-  end
-  if arg["optional"]
-    name = "[#{name}]"
-  end
+def argument(arg)
+  name = arg['name'].is_a?(Array) ? arg['name'].join(' ') : arg['name']
+  name = arg['enum'].join '|' if 'enum' == arg['type']
+  name = arg['command'] + ' ' + name if arg['command']
+  name = "#{name} [#{name} ...]" if arg['multiple']
+  name = "[#{name}]" if arg['optional']
   name
 end
 
-def arguments command
-  return "-" unless command["arguments"]
-  command["arguments"].map do |arg|
+def arguments(command)
+  return '-' unless command['arguments']
+  command['arguments'].map do |arg|
     argument arg
-  end.join " "
+  end.join ' '
 end
 
 def commands
   return @commands if @commands
 
-  require "rubygems"
-  require "net/http"
-  require "net/https"
-  require "json"
-  require "uri"
+  require 'rubygems'
+  require 'net/http'
+  require 'net/https'
+  require 'json'
+  require 'uri'
 
-  url = URI.parse "https://raw.githubusercontent.com/antirez/redis-doc/master/commands.json"
+  url = URI.parse 'https://raw.githubusercontent.com/antirez/redis-doc/master/commands.json'
   client = Net::HTTP.new url.host, url.port
   client.use_ssl = true
   response = client.get url.path
@@ -66,25 +61,25 @@ end
 def generate_groups
   GROUPS.map do |n|
     "\"#{n}\""
-  end.join(",\n    ");
+  end.join(",\n    ")
 end
 
 def generate_commands
-  commands.to_a.sort do |x,y|
+  commands.to_a.sort do |x, y|
     x[0] <=> y[0]
   end.map do |key, command|
-    group = GROUPS_BY_NAME[command["group"]]
+    group = GROUPS_BY_NAME[command['group']]
     if group.nil?
       STDERR.puts "Please update groups array in #{__FILE__}"
-      raise "Unknown group #{command["group"]}"
+      raise "Unknown group #{command['group']}"
     end
 
     ret = <<-SPEC
 { "#{key}",
     "#{arguments(command)}",
-    "#{command["summary"]}",
+    "#{command['summary']}",
     #{group},
-    "#{command["since"]}" }
+    "#{command['since']}" }
     SPEC
     ret.strip
   end.join(",\n    ")
@@ -113,4 +108,3 @@ struct commandHelp {
 
 #endif
 HELP_H
-

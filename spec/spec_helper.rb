@@ -44,6 +44,7 @@ RSpec.configure do |config|
   # Must set HTTP_ACCEPT to application/json
   # To render jbuilder views.
   config.before(:each) do
+    $redis.del 'items'
     request.env['HTTP_ACCEPT'] = 'application/json' if defined? request
   end
 

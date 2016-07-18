@@ -7,8 +7,8 @@ RSpec.describe ItemsController, type: [:controller] do
 
   user = FactoryGirl.create(:user)
   let!(:items) { FactoryGirl.create_list(:item, 10, seller: user) }
-	let!(:item_banned) {FactoryGirl.create(:item, status: "banned")}
-	let(:json) { JSON.parse(response.body) }
+  let!(:item_banned) { FactoryGirl.create(:item, status: 'banned') }
+  let(:json) { JSON.parse(response.body) }
 
   describe 'GET #index' do
     before { get :index }
@@ -25,7 +25,7 @@ RSpec.describe ItemsController, type: [:controller] do
     # Pulls all items from test db
     # Iterates through response_items and db_items
     # Extractes ids of all objects in each collection and passes them into separate arrays
-		# Makes sure neither array is empty
+    # Makes sure neither array is empty
     # Expects the two arrays of ids to be equal
     it 'returns a list of all items' do
       db_items = JSON.parse(Item.all.to_json)
@@ -33,18 +33,16 @@ RSpec.describe ItemsController, type: [:controller] do
       response_items_ids = json.map { |item| item['id'] }
       db_items_ids = db_items.map { |item| item['id'] }
 
-			expect(response_items_ids.length > 0 && db_items_ids.length > 0).to eq(true)
+      expect(response_items_ids.length > 0 && db_items_ids.length > 0).to eq(true)
       expect(response_items_ids).to eq(db_items_ids)
     end
 
-		it 'omits fields seller_name and published_date for banned items' do
-			banned_item = json.select{|item| item["status"] == "banned"}
+    it 'omits fields seller_name and published_date for banned items' do
+      banned_item = json.select { |item| item['status'] == 'banned' }
 
-			expect(banned_item[0]["seller_name"]).to eq(nil)
-			expect(banned_item[0]["published_date"]).to eq(nil)
-		end
-
-
+      expect(banned_item[0]['seller_name']).to eq(nil)
+      expect(banned_item[0]['published_date']).to eq(nil)
+    end
   end
 
   describe 'GET #show non-banned item' do
@@ -63,7 +61,7 @@ RSpec.describe ItemsController, type: [:controller] do
     # Verifies that response_item and db_item attributes match
     # Had to manipulate the db_item attributes
     # Because I manipulated some data in the jbuilder template
-		# satisfies 'a list of all items' requirement
+    # satisfies 'a list of all items' requirement
     it 'returns all required fields' do
       response_item = json
       db_item = items[0]
@@ -80,20 +78,19 @@ RSpec.describe ItemsController, type: [:controller] do
     end
   end
 
-	describe 'GET #show banned item' do
-		before { get :show, id: item_banned.id }
-		it 'returns http success' do
-			expect(response).to have_http_status(:success)
-		end
+  describe 'GET #show banned item' do
+    before { get :show, id: item_banned.id }
+    it 'returns http success' do
+      expect(response).to have_http_status(:success)
+    end
 
-		it 'responds with json' do
-			expect(response.content_type).to eq('application/json')
-		end
+    it 'responds with json' do
+      expect(response.content_type).to eq('application/json')
+    end
 
-		it 'omits fields seller_name and published_date for banned item' do
-			expect(json["seller_name"]).to eq(nil)
-			expect(json["published_date"]).to eq(nil)
-		end
-	end
-
+    it 'omits fields seller_name and published_date for banned item' do
+      expect(json['seller_name']).to eq(nil)
+      expect(json['published_date']).to eq(nil)
+    end
+  end
 end

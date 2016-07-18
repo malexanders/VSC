@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-	include ItemsHelper
+  include ItemsHelper
   # Returns full list of items
   def index
     @items = fetch_items
