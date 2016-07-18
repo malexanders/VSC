@@ -2,7 +2,10 @@ class ItemsController < ApplicationController
   include ItemsHelper
   # Returns full list of items
   def index
-    @items = fetch_items
+		# Uncomment when using redis for caching
+    # @items = fetch_items
+
+		@items = Item.all
   end
 
   # Returns details for a single item
