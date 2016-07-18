@@ -131,22 +131,5 @@ one-to-many relationship for items to user(as seller) relationship
 | category_id | integer | standard type for foreign_key |
 
 # Model Caching with Redis
-I successfully implemented model caching with redis for the Item model, for items#index. At that point, I decided to attempted pushing to production. I ran into some problems here and simply didn't have enough time to work it out. I decided to revert back to a functional state and deliver the code as such. Given more time I would have fully implemented caching.
 
-## Notes:
-__items#index__
-* When $redis.get("items") = nil
-	* iterate through all items in db
-	* generate json like array of hashes
-		* pull all required information from item object and associated categories and sellers objects
-		* apply formatting for readable display in json response
-	* apply to_json to array of hashes and pass to $redis.set
-	* return array of hashes to be rendered in jbuilder view
-		* must change from '.' syntax to object notation in the jbuilder view
-	* response time ~ 487ms
-		* seems a little long
-
-* When $redis.get("items") != nil
-	* pull items from redis store
-	* response time ~7ms
-		* sweeeet!
+I began the process of implementing caching with redis but didn't have time to fully implement it. Given another day or two it would be fully functional.
