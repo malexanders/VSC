@@ -104,7 +104,7 @@ one-to-many relationship for items to user(as seller) relationship
 ### User Model
 | column | type | reason |
 | ------ | ---- |------- |
-| name   | string | TODO __limit characters__ |
+| name   | string | standard type for names |
 | latitude | decimal{9,6} | I chose the decimal type because it is more accurate than float. I chose this degree of accuracy because every decimal instance in ruby that has a precision of 1-9 takes up 5 bytes. Therefore, you might as well chose the maximum precision of 9. A scale of 6 is probably over kill as it should provide a precision of < 1m, at the equator. You will never need more than 3 digits left of the decimal in a lat/long value |
 | longtitude | decimal{9,6} | see latitude |
 
@@ -112,7 +112,7 @@ one-to-many relationship for items to user(as seller) relationship
 ### Item Model
 | column | type | reason |
 | ------ | ---- |------- |
-| title | string | TODO __limit characters__ |
+| title | string | standard type for titles |
 | description | text | Text has more characters than string. Allows users to add a long description about an item. |
 | price | bigint | Save price in cents; Integers perform faster than numeric or float in math operations|
 | status | integer | Allows me to apply ActiveRecord Enum to this column. Status options are a static list and are unlikely to change much in the future, therefore, ActiveRecord Enum is an elegant solution for getting and setting values. |
@@ -132,4 +132,4 @@ one-to-many relationship for items to user(as seller) relationship
 
 # Model Caching with Redis
 
-I began the process of implementing caching with redis but didn't have time to fully implement it. Given another day or two it would be fully functional.
+I began the process of implementing caching with redis but didn't have time to fully implement it, and realize full performance benefits. Therefore, I reverted back to a state previous to redis caching for submission of the coding challenge. Given another day or two I would have fully implemented caching with redis using sidekiq to run background jobs.
